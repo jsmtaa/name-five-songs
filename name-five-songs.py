@@ -20,7 +20,7 @@ def get_five_songs(artist):
     o = response.json()
 
     tracks = []
-
+    
     count = 1
     for result in o["results"]:
         if count > SONG_COUNT: 
@@ -28,6 +28,11 @@ def get_five_songs(artist):
         # Filter tracks from the artist and collabs (e.g. artist = "artist, another_artist")
         if not artist in result["artistName"].title():
             continue
+
+        # Prevents duplicates
+        if result["trackName"] in tracks:
+            continue
+
         tracks.append(result["trackName"])
         count += 1
 
